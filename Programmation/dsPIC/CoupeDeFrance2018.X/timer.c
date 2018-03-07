@@ -23,6 +23,8 @@ double prevCommandeR;
 int tSpeedL[10];    //for sliding average
 int tSpeedR[10];
 
+extern char arrived;
+
 void initTimer() {
     initTimer1();
     initTimer2();
@@ -180,7 +182,10 @@ void __attribute__((interrupt,no_auto_psv)) _T1Interrupt(void)
             commandeR = 0;
             pidSpeedLeft.sumI = 0;
             pidSpeedLeft.sumI = 0;
+            arrived = 1;
         }
+        else
+            arrived = 0;
 
         //print(itoa((int)(errorD)));
 

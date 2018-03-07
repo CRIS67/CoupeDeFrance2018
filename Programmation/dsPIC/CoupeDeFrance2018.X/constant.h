@@ -92,4 +92,11 @@
 #define AUTO_SAMPLE 0   //0-Sampling begins when SAMP bit is set / 1-Sampling begins immediately after last conversion; SAMP bit is auto-set
 // </editor-fold>
 
+// <editor-fold defaultstate="collapsed" desc="Path generation">
+#define ROTATION_SPEED  0.002    //rad
+#define LINEAR_SPEED    0.1       //mm
+#define DELAY_SPEED     1       //ms
+// </editor-fold>
+
+
 #endif	/* UART_H */
