@@ -59,7 +59,7 @@
 #define PWM_PR_L    PHASE5
 #define PWM_PR_R    SPHASE5
 
-#define VBAT        12  //à remplacer plus tard par lecture de la tension ?
+#define VBAT        12  //Ã  remplacer plus tard par lecture de la tension ?
 
 #define VSAT        12  //saturation pour brider la vitesse
 
@@ -69,7 +69,7 @@
 #define ACC_MAX 0.24
 
 #define MAX_ERROR_D     1//10      //mm
-#define MAX_ERROR_A     0.01//0.01rad ~= 0.57°
+#define MAX_ERROR_A     0.01//0.01rad ~= 0.57Â°
 #define MAX_SPEED_STOP  5 / ENCODER_WHEEL_RADIUS    //rad/s -> 5mm/s
 
 // </editor-fold>
@@ -95,7 +95,7 @@
 // <editor-fold defaultstate="collapsed" desc="Path generation">
 #define ROTATION_SPEED  0.002    //rad
 #define LINEAR_SPEED    0.1       //mm
-#define DELAY_SPEED     1       //ms
+#define DELAY_SPEED     1       //ms  //Warning -> setpoint change faster than control loop
 // </editor-fold>
 
 
