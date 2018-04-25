@@ -5,6 +5,8 @@
  * Created on September 18, 2017, 11:23 PM
  */
 
+#include <p33EP512GM310.h>
+
 #include "GPIO.h"
 
 void initGPIO() {
@@ -17,12 +19,15 @@ void initGPIO() {
     TRISE = 0xFFFF;
     TRISF = 0xFFFF;
     TRISG = 0xFFFF;
-    
-    TRISGbits.TRISG14 = 0;  //LED rupt
+
     TRISDbits.TRISD1 = 0;   //PWM_L
     TRISDbits.TRISD2 = 0;   //PWM_R
     TRISEbits.TRISE8 = 0;   //SENS_L
-    TRISEbits.TRISE9 = 0;   //SENS_R
+    TRISEbits.TRISE9 = 0;   //SENS_R    
+    TRISGbits.TRISG14 = 0;  //LED rupt
+    //TRISGbits.TRISG12 = 1;  //rupt_1
+    //TRISGbits.TRISG13 = 1;  //rupt_2
+    
     //1 -> analog / 0 -> digital
     ANSELA = 0x0000;
     ANSELB = 0x0000;
@@ -63,6 +68,8 @@ void initGPIO() {
     CNENE = 0x0000;
     CNENF = 0x0000;
     CNENG = 0x0000;
+    CNENGbits.CNIEG12 = 1;
+    CNENGbits.CNIEG13 = 1;
     //1 -> High(3.3V) or 0V(open-drain) / 0 -> Low(0V) or high-impedance(open-drain)
     LATA = 0x0000;
     LATB = 0x0000;

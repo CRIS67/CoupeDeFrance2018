@@ -75,14 +75,11 @@
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="I/O">
-#define led         LATGbits.LATG14     //Led-Rupt
-#define PWM_R       PDC5            //PWM5L pin7  RD2 PWM_ASS_1
-#define PWM_L       SDC5            //PWM5H pin6  RD1 PWM_ASS_0
-#define SENS_L      LATEbits.LATE8  //      pin18 RE8 SENS_ASS_0
-#define SENS_R      LATEbits.LATE9  //      pin19 RE9 SENS_ASS_1
-#define RUPT_ASS_1  PORTGbits.RG12  //  
-#define RUPT_ASS_2  PORTGbits.RG13  //  
-
+#define led LATGbits.LATG14     //Led-Rupt
+#define PWM_R   PDC5            //PWM5L pin7  RD2 PWM_ASS_1
+#define PWM_L   SDC5            //PWM5H pin6  RD1 PWM_ASS_0
+#define SENS_L  LATEbits.LATE8  //      pin18 RE8 SENS_ASS_0
+#define SENS_R  LATEbits.LATE9  //      pin19 RE9 SENS_ASS_1
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Odometry">
