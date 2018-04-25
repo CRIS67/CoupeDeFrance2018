@@ -20,6 +20,8 @@
 void initTimer();
 void initTimer1();
 void initTimer2();
+void initTimer3();
+void initTimer4();
 void delay_us(unsigned int delay);
 void delay_ms(unsigned int delay);
 

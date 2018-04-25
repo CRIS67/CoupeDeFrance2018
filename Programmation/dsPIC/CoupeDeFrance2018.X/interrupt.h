@@ -16,7 +16,7 @@
 typedef enum pinCN pinCN;
 enum pinCN
 {
-    DEFAULT,RUPT_1, RUPT_2
+    DEFAULT,RUPT_1, RUPT_2, ECHO, ECHO_0, ECHO_1, ECHO_2, ECHO_3, ECHO_4, ECHO_5
 };
 /*typedef struct SavePort SavePort;
 struct SavePort

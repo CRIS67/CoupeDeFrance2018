@@ -8,7 +8,8 @@
 #ifndef PWM_H
 #define	PWM_H
 
-#include <xc.h> // include processor files - each processor file is guarded.  
+#include <xc.h> // include processor files - each processor file is guarded. 
+#include "timer.h"
 #include "constant.h"
 
 /*#define sendToMotor(valueR, valueL) if(valueL > 0){\
@@ -69,6 +70,10 @@ void initPWM3();
 void initPWM4();
 void initPWM5();
 void initPWM6();
+
+void testServo();
+void servoUs(unsigned char servo, double value);
+
 void sendToMotor(double valueR, double valueL);
 
 

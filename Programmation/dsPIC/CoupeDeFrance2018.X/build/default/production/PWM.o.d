@@ -1,4 +1,8 @@
 build/default/production/PWM.o:  \
 PWM.c  \
 PWM.h  \
-constant.h 
+timer.h  \
+constant.h  \
+PID.h  \
+ GPIO.h  \
+UART.h 

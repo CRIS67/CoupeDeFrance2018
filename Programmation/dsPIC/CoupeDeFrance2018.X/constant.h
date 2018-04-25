@@ -3,30 +3,30 @@
 
 // <editor-fold defaultstate="collapsed" desc="PID">
 //PID speed left    units : rad/s -> V
-#define KP_SPEED_LEFT       0.576
-#define KI_SPEED_LEFT       0.05
-#define KD_SPEED_LEFT       0.005
+#define KP_SPEED_LEFT       0.38//0.57//0.576
+#define KI_SPEED_LEFT       0//0.00535//0.05
+#define KD_SPEED_LEFT       0.0013375//0.005
 #define BIAS_SPEED_LEFT     0
 #define T_SPEED_LEFT        0.01    //s
 
 //PID speed right   units : rad/s -> V
-#define KP_SPEED_RIGHT      0.576
-#define KI_SPEED_RIGHT      0.05
-#define KD_SPEED_RIGHT      0.005
+#define KP_SPEED_RIGHT      0.38//0.57//0.576
+#define KI_SPEED_RIGHT      0//0.00535//0.05
+#define KD_SPEED_RIGHT      0.0013375//0.005
 #define BIAS_SPEED_RIGHT    0
 #define T_SPEED_RIGHT       0.01
 
 //PID distance      units : mm -> rad/s
-#define KP_DISTANCE         0.07
+#define KP_DISTANCE         0.4//0.15//0.04
 #define KI_DISTANCE         0
-#define KD_DISTANCE         0
+#define KD_DISTANCE         0.001//0//0.0065
 #define BIAS_DISTANCE       0
 #define T_DISTANCE          0.01
 
 //PID angle         units : rad -> rad/s
-#define KP_ANGLE        10
+#define KP_ANGLE        60//30//60
 #define KI_ANGLE        0
-#define KD_ANGLE        0
+#define KD_ANGLE        1//0//6.5
 #define BIAS_ANGLE      0
 #define T_ANGLE         0.01
 
@@ -46,8 +46,8 @@
 
 // <editor-fold defaultstate="collapsed" desc="UART">
 #define BAUDRATE 9600
-#define BRGVAL 455//((CLOCK_FREQ_HZ/2/BAUDRATE)/16) - 1
-
+#define BRGVAL 455  //((CLOCK_FREQ_HZ/2/BAUDRATE)/16) - 1   9600
+#define BRGVAL2 6//34//37   //  115000
 #define TX_SIZE 100     //size of Tx buffer
 #define RX_SIZE 100     //size of Rx buffer
 // </editor-fold>
@@ -56,39 +56,87 @@
 #define FORWARD     1
 #define BACKWARD    0
 
-#define PWM_PR_L    PHASE5
-#define PWM_PR_R    SPHASE5
+#define PWM_PR_L    PHASE3
+#define PWM_PR_R    SPHASE3
 
 #define VBAT        12  //à remplacer plus tard par lecture de la tension ?
 
 #define VSAT        12  //saturation pour brider la vitesse
 
 #define DEAD_ZONE   1.3   //tension min qui fait tourner le moteur A MESURER
+#define COEF_MOT_BO 0.65//0.428571    //  250*12/7000
 //#define VMIN        1//0.3   //arreter les moteurs si la commande trop faible
 
-#define ACC_MAX 0.24
+#define ACC_MAX 10000
 
-#define MAX_ERROR_D     1//10      //mm
+#define MAX_ERROR_D     1//1//10      //mm
 #define MAX_ERROR_A     0.01//0.01rad ~= 0.57°
 #define MAX_SPEED_STOP  5 / ENCODER_WHEEL_RADIUS    //rad/s -> 5mm/s
+
+#define N_ASSERV        10  //nombre d'itérations entre 2 boucles d'asserv'
+#define DIST_AIM_POINT  50  //distance au dessus de laquelle le robot vise le point final
+#define SMOOTHING_FACTOR    0.4
+#define N_SMOOTHING     5
 
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="I/O">
-#define led         LATGbits.LATG14     //Led-Rupt
-#define PWM_R       PDC5            //PWM5L pin7  RD2 PWM_ASS_1
-#define PWM_L       SDC5            //PWM5H pin6  RD1 PWM_ASS_0
-#define SENS_L      LATEbits.LATE8  //      pin18 RE8 SENS_ASS_0
-#define SENS_R      LATEbits.LATE9  //      pin19 RE9 SENS_ASS_1
-#define RUPT_ASS_1  PORTGbits.RG12  //  
-#define RUPT_ASS_2  PORTGbits.RG13  //  
+
+#define NB_US       6               //number of sensors
+#define N_US        20              //loop iterations
+
+#define PWM_R       PDC3            //PWM5L pin7  RD2 PWM_ASS_1
+#define PWM_L       SDC3            //PWM5H pin6  RD1 PWM_ASS_0
+#define SENS_L      LATGbits.LATG1  //      pin18 RE8 SENS_ASS_0
+#define SENS_R      LATGbits.LATG0  //      pin19 RE9 SENS_ASS_1
+
+#define RUPT_ASS_0  PORTEbits.RE8
+#define RUPT_ASS_1  PORTGbits.RG10
+#define RUPT_ASS_2  PORTAbits.RA12
+#define RUPT_ASS_3  PORTEbits.RE9
+
+#define RUPT_ACT_0  PORTFbits.RF9
+#define RUPT_ACT_1  PORTBbits.RB1
+#define RUPT_ACT_2  PORTBbits.RB0
+#define RUPT_ACT_3  PORTAbits.RA1
+#define RUPT_ACT_4  PORTAbits.RA0
+#define RUPT_ACT_5  PORTAbits.RA11
+
+#define SIGNAL_JUMPER   PORTFbits.RF10
+
+#define ECHO_US_0   PORTAbits.RA8
+#define ECHO_US_1   PORTDbits.RD14
+#define ECHO_US_2   PORTEbits.RE14
+#define ECHO_US_3   PORTEbits.RE12
+#define ECHO_US_4   PORTFbits.RF13
+#define ECHO_US_5   PORTCbits.RC11
+
+#define TRIG_US_0   LATBbits.LATB4
+#define TRIG_US_1   LATDbits.LATD15
+#define TRIG_US_2   LATEbits.LATE15
+#define TRIG_US_3   LATEbits.LATE13
+#define TRIG_US_4   LATFbits.LATF12
+#define TRIG_US_5   LATGbits.LATG11
+
+#define US_NUM_0    LATCbits.LATC1
+#define US_NUM_1    LATCbits.LATC0
+
+
+#define LED_0       LATGbits.LATG3
+#define LED_1       LATFbits.LATF4
+#define LED_2       LATFbits.LATF5
+
+#define SENS_ASS_0  LATGbits.LATG0
+#define SENS_ASS_1  LATGbits.LATG1
+#define SENS_ACT_0  LATGbits.LATG12
+#define SENS_ACT_1  LATGbits.LATG13
 
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Odometry">
 #define PI                                  3.14159265358979323846
 #define ENCODER_WHEEL_RADIUS                24.6                    //mm         
-#define DISTANCE_BETWEEN_ENCODER_WHEELS     295.8918449447346863    //mm
+#define DISTANCE_BETWEEN_ENCODER_WHEELS     300//295.8918449447346863    //mm
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="ADC">
@@ -100,10 +148,24 @@
 #define LINEAR_SPEED        0.1     //mm
 #define DELAY_SPEED         1       //ms
 
-#define ACCELERATION_MAX    0.1     //m.s^-2
-#define SPEED_MAX           0.5     //m.s^-1
+#define ACCELERATION_MAX    1000000     //mm.s^-2
+#define SPEED_MAX           1000000    //mm.s^-1
 #define TE                  0.01    //s
 // </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Servomotors">
+#define SERVO0  0
+#define SERVO1  1
+#define SERVO2  2
+#define SERVO3  3
+#define SERVO4  4
+#define SERVO5  5
+#define SERVO6  6
+
+#define SERVO0_UP       2600
+#define SERVO0_DOWN     1800
+// </editor-fold>
+
 
 
 #endif	/* UART_H */

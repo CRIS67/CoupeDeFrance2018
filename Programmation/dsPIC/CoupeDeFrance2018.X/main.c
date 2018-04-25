@@ -19,11 +19,11 @@
 #include "ADC.h"
 #include "UART.h"
 #include "interrupt.h"
+#include "US.h"
 
 void testAccMax();
 void reglageDiametre();
 void printPos();
-//void straightPath(double cx, double cy, double ct);
 void straightPath(double cx, double cy, double ct, double speedMax, double accMax);
 
 void test();
@@ -39,27 +39,39 @@ char TX[TX_SIZE];
 char RX[RX_SIZE];
 char unsigned TX_i;
 char unsigned RX_i;
-double x;
-double y;
-double theta;
+/*Current position*/
+volatile double x;
+volatile double y;
+volatile double theta;
+/*Current setpoint position*/
 double xc;
 double yc;
 double thetac;
-PID pidSpeedLeft, pidSpeedRight, pidDistance, pidAngle;
+/*Final setpoint position*/
+double xf;
+double yf;
+double tf;
+volatile PID pidSpeedLeft, pidSpeedRight, pidDistance, pidAngle;
 int state = 0;
 int R,L;
 
-char arrived;
+volatile char arrived;
+
+extern volatile char   US_ON[NB_US];
+extern volatile char   US_R[NB_US];
+extern volatile double US[NB_US];
+
+volatile char sendBT = 0;
 
 int main(){
     initClock(); //Clock 140 MHz
     initGPIO();
-    initTimer();
     initPWM();
     initQEI();
     IOCON2 = 0;
     initUART();
-    
+    initInt();
+    initUS();
     x = 0;
     y = 0;
     theta = 0;
@@ -68,115 +80,57 @@ int main(){
     yc = 0;
     thetac = 0;
     
+    xf = 0;
+    yf = 0;
+    tf = 0;
+    
     TX_i = 0;
     RX_i = 0;
     
     R = 0;
     L = 0;
     
+    double i;
+    // <editor-fold defaultstate="collapsed" desc="Start">
+    LED_0 = 1;
+    for (i = 0; i < 10000; i++);
+    LED_0 = 0;
+    for (i = 0; i < 10000; i++);
+    LED_0 = 1;
+    for (i = 0; i < 10000; i++);
+    LED_0 = 0;
+    for (i = 0; i < 10000; i++);
+    LED_0 = 1;
+    for (i = 0; i < 10000; i++);
+    LED_0 = 0;
+    for (i = 0; i < 10000; i++);
+    LED_0 = 1;
+    for (i = 0; i < 10000; i++);
+    LED_0 = 0; 
+    // </editor-fold>
+
+    
     POS1CNTL = 0x8000;
     POS2CNTL = 0x8000;
     
-    led = 1;
-    
     initAllPID(&pidSpeedLeft, &pidSpeedRight, &pidDistance, &pidAngle);
+    initTimer();
     state = 0;
-    //testAccMax();
-    //reglageDiametre();
-    //printPos();
-    //double i;
+    
     while(1){
         switch(state){
             case 0:
                 xc = 0;
                 yc = 0;
                 thetac = 0;
-                led = 0;
                 delay_ms(1000);
-                state++;
-                break;
-            case 1 :
-                //PDC5 = R;
-                //SDC5 = L;
-                //delay_ms(1000);
-                led = 1;
-                
-                /*for(i = 0; i >= -20*PI; i-= 0.01){
-                    thetac = i;
-                    delay_ms(5);
-                }*/
-                /*for(i = 0; i <= 300; i++){
-                    xc = i;
-                    delay_ms(1);
-                }*/
-                //xc = 300;
-                //yc = 0;
-                //thetac = 0;
-                straightPath(200,200,PI/2,0.1,0.05);
-                delay_ms(10000);
-                printPos();
                 //state++;
                 break;
-            case 2 :
-                xc = 100;
-                yc = 0;
-                thetac = PI/2;
-                delay_ms(10000);
-                state++;
-                break;
-            case 3 :
-                xc = 100;
-                yc = 100;
-                thetac = PI/2;
-                delay_ms(10000);
-                state++;
-                break;
-            case 4 :
-                xc = 100;
-                yc = 100;
-                thetac = PI;
-                delay_ms(10000);
-                state++;
-                break;
-            case 5 :
-                xc = 0;
-                yc = 100;
-                thetac = PI;
-                delay_ms(10000);
-                state++;
-                break;
-            case 6 :
-                xc = 0;
-                yc = 100;
-                thetac = 3*PI/2;
-                delay_ms(10000);
-                state++;
-                break;
-            case 7 :
-                xc = 0;
-                yc = 0;
-                thetac = 3*PI/2;
-                delay_ms(10000);
-                state++;
-                break;
-            case 8 :
-                xc = 0;
-                yc = 0;
-                thetac = 2*PI;
-                break;
+            default:
+                print("ERROR UNDEFINED STATE");
+                printRpi("ERROR UNDEFINED STATE");
+                break;       
         }
-        
-        print("x : ");
-        print(itoa((int)x));
-        print("      y : ");
-        print(itoa((int)y));
-        print("      t : ");
-        print(itoa((int)((theta*360)/(2*PI))));
-        print("      t*100 : ");
-        print(itoa((int)((theta*36000)/(2*PI))));
-       
-        print("\r\n");
-        //delay_ms(5000);
     }
     return 0;
 }
@@ -230,42 +184,73 @@ void reglageDiametre(){
     }   
 }
 void printPos(){
-    while(1){
         print("x : ");
         print(itoa((int)x));
         print("      y : ");
         print(itoa((int)y));
         print("      t : ");
         print(itoa((int)((theta*360)/(2*PI))));
-        print("      t*100 : ");
-        print(itoa((int)((theta*36000)/(2*PI))));
-       
+        
         print("\r\n");
-        delay_ms(200);
-    }
 }
 void straightPath(double cx, double cy, double ct, double speedMax, double accMax){
     double i;
     double thetaRobotPoint = atan2(cy-y,cx-x);
-    
+    double phi = thetaRobotPoint - theta;
+    while(phi < -PI)
+        phi += 2*PI;
+    while(phi > PI){
+        phi -= 2*PI;
+    }
     /*Phase 1 : rotation */
-    if(thetaRobotPoint > theta){
-        for(i = theta; i <= thetaRobotPoint; i+= ROTATION_SPEED){
-            thetac = i;
-            delay_ms(DELAY_SPEED);
-        }
-    }
-    else{
-        for(i = theta; i >= thetaRobotPoint; i-= ROTATION_SPEED){
-            thetac = i;
-            delay_ms(DELAY_SPEED);
-        }
-    }
-    thetac = thetaRobotPoint;
-    arrived = 0;
-    while(!arrived);
+    xf = x;
+    yf = y;
+    tf = theta;
+    double theta0 = theta;
+    double AngularAcceleration = 10;
+    double maxAngularVelocity = 10;
+    double angularVelocity = 0;
+    double prevAngularVelocity = 0;
+    double angle = 0;
     
+    double sign;
+    if(phi > 0)
+        sign = 1;
+    else
+        sign = -1;
+    while(angularVelocity < maxAngularVelocity && angle < phi/2){
+		angularVelocity += AngularAcceleration * TE;
+		angle += TE * (prevAngularVelocity + angularVelocity) / 2;
+        thetac = theta0 + angle * sign;
+        prevAngularVelocity = angularVelocity;
+		delay_ms(TE * 1000);
+	}
+    double angle1 = angle;
+    while(angle < phi - angle1){
+		angle += TE * angularVelocity;
+        thetac = theta0 + angle * sign;
+        prevAngularVelocity = angularVelocity;
+		delay_ms(TE * 1000);
+	}
+    AngularAcceleration = -AngularAcceleration;
+    while(angularVelocity > 0 && angle < phi){
+		angularVelocity += AngularAcceleration * TE;
+		angle += TE * (prevAngularVelocity + angularVelocity) / 2;
+        thetac = theta0 + angle * sign;
+        prevAngularVelocity = angularVelocity;
+		delay_ms(TE * 1000);
+	}
+    thetac = theta0 + phi*sign;
+    /*arrived = 0;
+    while(!arrived){
+        printPos();
+    }*/
+ 
+    delay_ms(500);
     /* Phase 2 : straight line */
+    xf = cx;
+    yf = cy;
+    tf = ct;
     if(speedMax < 0)
         speedMax = 0;
     else if(speedMax > SPEED_MAX)
@@ -277,8 +262,8 @@ void straightPath(double cx, double cy, double ct, double speedMax, double accMa
     
     double y0 = y;
 	double x0 = x;
-	double dx = xc - x0;
-	double dy = yc - y0;
+	double dx = cx - x0;
+	double dy = cy - y0;
 	double alpha = atan2(dy,dx);
 	double totalDistance = sqrt(dx*dx+dy*dy);
     
@@ -296,7 +281,8 @@ void straightPath(double cx, double cy, double ct, double speedMax, double accMa
 	}
     double dist1 = dist;
 	//2
-	speed = SPEED_MAX;
+	if(speed > speedMax)
+        speed = speedMax;
 	while(dist < totalDistance - dist1){               //Condition
 		dist += TE * speed;
         xc = x0 + dist * cos(alpha);
@@ -305,8 +291,8 @@ void straightPath(double cx, double cy, double ct, double speedMax, double accMa
 		delay_ms(TE * 1000);
 	}
 	//3
-	acc = -ACCELERATION_MAX;
-	while(speed > 0){				//Condition		//v > 0			/		d < totalDistance
+	acc = -acc;
+	while(speed > 0 && dist < totalDistance){				//Condition		//v > 0			/		d < totalDistance
 		speed += acc * TE;
 		dist += TE * (precSpeed + speed) / 2;
         xc = x0 + dist * cos(alpha);
@@ -314,117 +300,15 @@ void straightPath(double cx, double cy, double ct, double speedMax, double accMa
         precSpeed = speed;
 		delay_ms(TE * 1000);
 	}
-    
-    arrived = 0;
-    while(!arrived);
-    
-    print("x : ");
-    print(itoa((int)x));
-    print("      y : ");
-    print(itoa((int)y));
-    print("      t : ");
-    print(itoa((int)((theta*360)/(2*PI))));
-    print("      t*100 : ");
-    print(itoa((int)((theta*36000)/(2*PI))));
-    print("\r\n");
-    print("cx : ");
-    print(itoa((int)cx));
-    print("      ccy : ");
-    print(itoa((int)cy));
-    print("      ct : ");
-    print(itoa((int)((ct*360)/(2*PI))));
-    print("      ct*100 : ");
-    print(itoa((int)((ct*36000)/(2*PI))));
-    print("\r\n");
-    /*Phase 3 : rotation */
-    if(ct > theta){
-        for(i = theta; i <= ct; i+= ROTATION_SPEED){
-            thetac = i;
-            delay_ms(DELAY_SPEED);
-        }
-    }
-    else{
-        for(i = theta; i >= ct; i-= ROTATION_SPEED){
-            thetac = i;
-            delay_ms(DELAY_SPEED);
-        }
-    }
-    thetac = ct;
-    arrived = 0;
-    while(!arrived);
-    
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-void SavestraightPath(double cx, double cy, double ct){
-    double i;
-    double thetaRobotPoint = atan2(cy-y,cx-x);
-    
-    /*Phase 1 : rotation */
-    if(thetaRobotPoint > theta){
-        for(i = theta; i <= thetaRobotPoint; i+= ROTATION_SPEED){
-            thetac = i;
-            delay_ms(DELAY_SPEED);
-        }
-    }
-    else{
-        for(i = theta; i >= thetaRobotPoint; i-= ROTATION_SPEED){
-            thetac = i;
-            delay_ms(DELAY_SPEED);
-        }
-    }
-    thetac = thetaRobotPoint;
-    arrived = 0;
-    while(!arrived);
-    
-    /* Phase 2 : straight line */
-    double y0 = y;
-    if(cx != x){    //Warning : infinite slope
-        double slope = (cy-y)/(cx-x);
-        if(cx > x){
-            for(i = x; i <= cx; i+= LINEAR_SPEED){
-                xc = i;
-                yc = y0 + i*slope;
-                delay_ms(DELAY_SPEED);
-            }
-        }
-        else{
-            for(i = x; i >= cx; i-= LINEAR_SPEED){
-                xc = i;
-                yc = y0 + i*slope;
-                delay_ms(DELAY_SPEED);
-            }
-        }
-    }
-    else{
-        if(cy > y){
-            for(i = y; i <= cy; i+= LINEAR_SPEED){
-                yc = i;
-                delay_ms(DELAY_SPEED);
-            }
-        }
-        else{
-            for(i = y; i >= cy; i= LINEAR_SPEED){
-                yc = i;
-                delay_ms(DELAY_SPEED);
-            }
-        }
-    }
     xc = cx;
     yc = cy;
-    arrived = 0;
-    while(!arrived);
+    /*arrived = 0;
+    while(!arrived){
+        printPos();
+    }*/
+    
+    delay_ms(500);
+    //while(!arrived);
     
     /*Phase 3 : rotation */
     if(ct > theta){
@@ -439,8 +323,13 @@ void SavestraightPath(double cx, double cy, double ct){
             delay_ms(DELAY_SPEED);
         }
     }
+    //print("Phase 3 OK\n");
     thetac = ct;
-    arrived = 0;
-    while(!arrived);
+    /*arrived = 0;
+    while(!arrived){
+        printPos();
+    }*/
     
+    delay_ms(500);
+    //while(!arrived);
 }

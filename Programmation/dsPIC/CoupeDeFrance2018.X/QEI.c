@@ -13,33 +13,8 @@
 #include "QEI.h"
 
 void initQEI() {
-    initQEIPPS();
     initQEI1();
     initQEI2();
-}
-
-void initQEIPPS(){
-    
-    //TRISG = 0xFFFF;
-    TRISGbits.TRISG6 = 1;
-    TRISGbits.TRISG7 = 1;
-    TRISGbits.TRISG8 = 1;
-    TRISGbits.TRISG9 = 1;
-    
-    //ANSELG = 0;
-    ANSELGbits.ANSG6 = 0;
-	ANSELGbits.ANSG7 = 0;
-    ANSELGbits.ANSG8 = 0;
-    ANSELGbits.ANSG9 = 0;
-    
-	RPINR14bits.QEA1R = 0b1110110;  //QEI1A -> RPI118 (pin10)
-    RPINR14bits.QEB1R = 0b1111000;  //QEI1B -> RPI120 (pin12)
-    
-    RPINR16bits.QEA2R = 0b1110111;  //QEI2A -> RPI119 (pin11)
-    RPINR16bits.QEB2R = 0b1111001;  //QEI2B -> RPI121 (pin14)
-    //RPINR17bits.INDX2R= 0b0000000;  //QEI1Index -> 
-	
-	
 }
 
 void initQEI1(){

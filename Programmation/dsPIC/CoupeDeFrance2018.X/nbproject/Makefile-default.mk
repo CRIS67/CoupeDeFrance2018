@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=ADC.c GPIO.c PID.c PWM.c QEI.c SPI.c clock.c confBits.c interrupt.c main.c timer.c UART.c
+SOURCEFILES_QUOTED_IF_SPACED=ADC.c GPIO.c PID.c PWM.c QEI.c SPI.c clock.c confBits.c interrupt.c main.c timer.c UART.c US.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/ADC.o ${OBJECTDIR}/GPIO.o ${OBJECTDIR}/PID.o ${OBJECTDIR}/PWM.o ${OBJECTDIR}/QEI.o ${OBJECTDIR}/SPI.o ${OBJECTDIR}/clock.o ${OBJECTDIR}/confBits.o ${OBJECTDIR}/interrupt.o ${OBJECTDIR}/main.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/UART.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/ADC.o.d ${OBJECTDIR}/GPIO.o.d ${OBJECTDIR}/PID.o.d ${OBJECTDIR}/PWM.o.d ${OBJECTDIR}/QEI.o.d ${OBJECTDIR}/SPI.o.d ${OBJECTDIR}/clock.o.d ${OBJECTDIR}/confBits.o.d ${OBJECTDIR}/interrupt.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/timer.o.d ${OBJECTDIR}/UART.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/ADC.o ${OBJECTDIR}/GPIO.o ${OBJECTDIR}/PID.o ${OBJECTDIR}/PWM.o ${OBJECTDIR}/QEI.o ${OBJECTDIR}/SPI.o ${OBJECTDIR}/clock.o ${OBJECTDIR}/confBits.o ${OBJECTDIR}/interrupt.o ${OBJECTDIR}/main.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/UART.o ${OBJECTDIR}/US.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/ADC.o.d ${OBJECTDIR}/GPIO.o.d ${OBJECTDIR}/PID.o.d ${OBJECTDIR}/PWM.o.d ${OBJECTDIR}/QEI.o.d ${OBJECTDIR}/SPI.o.d ${OBJECTDIR}/clock.o.d ${OBJECTDIR}/confBits.o.d ${OBJECTDIR}/interrupt.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/timer.o.d ${OBJECTDIR}/UART.o.d ${OBJECTDIR}/US.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/ADC.o ${OBJECTDIR}/GPIO.o ${OBJECTDIR}/PID.o ${OBJECTDIR}/PWM.o ${OBJECTDIR}/QEI.o ${OBJECTDIR}/SPI.o ${OBJECTDIR}/clock.o ${OBJECTDIR}/confBits.o ${OBJECTDIR}/interrupt.o ${OBJECTDIR}/main.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/UART.o
+OBJECTFILES=${OBJECTDIR}/ADC.o ${OBJECTDIR}/GPIO.o ${OBJECTDIR}/PID.o ${OBJECTDIR}/PWM.o ${OBJECTDIR}/QEI.o ${OBJECTDIR}/SPI.o ${OBJECTDIR}/clock.o ${OBJECTDIR}/confBits.o ${OBJECTDIR}/interrupt.o ${OBJECTDIR}/main.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/UART.o ${OBJECTDIR}/US.o
 
 # Source Files
-SOURCEFILES=ADC.c GPIO.c PID.c PWM.c QEI.c SPI.c clock.c confBits.c interrupt.c main.c timer.c UART.c
+SOURCEFILES=ADC.c GPIO.c PID.c PWM.c QEI.c SPI.c clock.c confBits.c interrupt.c main.c timer.c UART.c US.c
 
 
 CFLAGS=
@@ -172,6 +172,13 @@ ${OBJECTDIR}/UART.o: UART.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  UART.c  -o ${OBJECTDIR}/UART.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/UART.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/UART.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/US.o: US.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/US.o.d 
+	@${RM} ${OBJECTDIR}/US.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  US.c  -o ${OBJECTDIR}/US.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/US.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/US.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/ADC.o: ADC.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -256,6 +263,13 @@ ${OBJECTDIR}/UART.o: UART.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/UART.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  UART.c  -o ${OBJECTDIR}/UART.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/UART.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/UART.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/US.o: US.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/US.o.d 
+	@${RM} ${OBJECTDIR}/US.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  US.c  -o ${OBJECTDIR}/US.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/US.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/US.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

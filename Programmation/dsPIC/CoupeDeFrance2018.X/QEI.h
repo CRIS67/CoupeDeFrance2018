@@ -11,9 +11,7 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 
 void initQEI();
-void initQEIPPS();
 void initQEI1();
 void initQEI2();
-char *itoa(int value);
 
 #endif	/* QEI_H */

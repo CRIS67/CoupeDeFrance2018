@@ -23,15 +23,16 @@ struct PID
     double processVariable;     //entree
     //double prevProcessVariable;
     double prevError;
+    double prevSmoothError;
     double sumI;
     double period;               //intervalle asserv
     double output;
 };
 
-void initAllPID(PID *pidSpeedLeft, PID *pidSpeedRight, PID *pidDistance, PID *pidAngle);
-void initPID(PID *pid, double Kp, double Ki, double Kd,double bias, double output, double period, double processVariable, double setPoint);
-void setSetPoint(PID *pid, double setPoint);
-void setProcessValue(PID *pid, double processVariable);
-double compute(PID *pid, double processVariable);
+void initAllPID(volatile PID *pidSpeedLeft, volatile PID *pidSpeedRight, volatile PID *pidDistance, volatile PID *pidAngle);
+void initPID(volatile PID *pid, double Kp, double Ki, double Kd,double bias, double output, double period, double processVariable, double setPoint);
+void setSetPoint(volatile PID *pid, double setPoint);
+void setProcessValue(volatile PID *pid, double processVariable);
+double compute(volatile PID *pid, double processVariable);
 
 #endif	/* PID_H */
