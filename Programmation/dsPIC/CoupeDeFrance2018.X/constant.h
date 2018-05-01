@@ -47,7 +47,7 @@
 // <editor-fold defaultstate="collapsed" desc="UART">
 #define BAUDRATE 9600
 #define BRGVAL 455  //((CLOCK_FREQ_HZ/2/BAUDRATE)/16) - 1   9600
-#define BRGVAL2 6//34//37   //  115000
+#define BRGVAL2 34//6//34//37   //  115000
 #define TX_SIZE 100     //size of Tx buffer
 #define RX_SIZE 100     //size of Rx buffer
 // </editor-fold>
@@ -59,7 +59,7 @@
 #define PWM_PR_L    PHASE3
 #define PWM_PR_R    SPHASE3
 
-#define VBAT        12  //à remplacer plus tard par lecture de la tension ?
+#define VBAT        (int)(((double)ADC1BUF0*5.7*3.3)/1024)//12  //à remplacer plus tard par lecture de la tension ?
 
 #define VSAT        12  //saturation pour brider la vitesse
 
@@ -128,8 +128,8 @@
 
 #define SENS_ASS_0  LATGbits.LATG0
 #define SENS_ASS_1  LATGbits.LATG1
-#define SENS_ACT_0  LATGbits.LATG12
-#define SENS_ACT_1  LATGbits.LATG13
+#define SENS_ACT_0  LATGbits.LATG13
+#define SENS_ACT_1  LATGbits.LATG12
 
 // </editor-fold>
 
@@ -140,7 +140,7 @@
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="ADC">
-#define AUTO_SAMPLE 0   //0-Sampling begins when SAMP bit is set / 1-Sampling begins immediately after last conversion; SAMP bit is auto-set
+#define AUTO_SAMPLE 1   //0-Sampling begins when SAMP bit is set / 1-Sampling begins immediately after last conversion; SAMP bit is auto-set
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Path generation">
@@ -166,6 +166,30 @@
 #define SERVO0_DOWN     1800
 // </editor-fold>
 
+// <editor-fold defaultstate="collapsed" desc="AX12">
+#define AX12_BAUDRATE 500000
+#define AX12_BRGVAL 34  //((CLOCK_FREQ_HZ/2/BAUDRATE)/4) - 1 
+
+#define AX12_TX_SIZE 100
+#define AX12_RX_SIZE 100
+
+#define AX12_ID_1 0x01
+#define AX12_ID_3 0x03
+#define AX12_ID_ALL 0xFE
+
+#define AX12_COMMAND_CW_ANGLE_LIMIT_LOW 0x06
+#define AX12_COMMAND_CW_ANGLE_LIMIT_HIGH 0x07
+#define AX12_COMMAND_CCW_ANGLE_LIMIT_LOW 0x08
+#define AX12_COMMAND_CCW_ANGLE_LIMIT_HIGH 0x09
+#define AX12_COMMAND_STATUS_RETURN_LEVEL 0x10
+#define AX12_COMMAND_LED 0x19
+#define AX12_COMMAND_GOAL_POSITION_LOW 0x1E
+#define AX12_COMMAND_GOAL_POSITION_HIGH 0x1F
+#define AX12_COMMAND_MOVING_SPEED_LOW 0x20
+#define AX12_COMMAND_MOVING_SPEED_HIGH 0x21
+
+#define AX12_INSTRUCTION_WRITE_DATA 0x03
+// </editor-fold>
 
 
 #endif	/* UART_H */

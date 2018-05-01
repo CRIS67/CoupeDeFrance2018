@@ -14,6 +14,9 @@ extern double xc;
 extern int state;
 extern PID pidAngle, pidDistance, pidSpeedLeft, pidSpeedRight;
 extern int R,L;
+extern volatile double US[NB_US];
+
+extern volatile unsigned char stop;
 
 char TxLoopBuffer[TX_SIZE];
 char TxLoopBuffer2[TX_SIZE];
@@ -22,6 +25,14 @@ char RxBuffer2[RX_SIZE];
 unsigned char iD,iF,iD2,iF2;                //index of first data and of first free element
 unsigned char TxOn,TxOn2;
 unsigned char iRx,iRx2;
+
+volatile double receivedX,receivedY,receivedTheta;
+volatile unsigned char newPosReceived = 0;
+volatile unsigned char newAngleReceived = 0;
+
+volatile unsigned char debugPosRpi = 0;
+volatile unsigned char debugPosRpiAsserv = 0;
+
 void initUART(){
     initUART1();
     initUART2();
@@ -254,15 +265,270 @@ void __attribute__((interrupt,no_auto_psv)) _U2RXInterrupt(void)
     
     while(U2STAbits.URXDA != 0)
     {
-        LED_0 = !LED_0;
+        /*LED_0 = !LED_0;
         char c = U2RXREG;
-        U2TXREG = c; // Loopback
-        /*if(iRx2 >= RX_SIZE)
+        U2TXREG = c; // Loopback*/
+        if(iRx2 >= RX_SIZE)
             iRx2 = 0;
         RxBuffer2[iRx2] = U2RXREG;
-        iRx2++;
-        if(RxBuffer2[iRx2-1] == '\n'){
-            switch(RxBuffer2[0]){
+        if(RxBuffer2[iRx2] == '\n'){
+            //set
+            if(RxBuffer2[0] == 's' && RxBuffer2[1] == 't' && RxBuffer2[2] == 'a' && RxBuffer2[3] == 'r' && RxBuffer2[4] == 't' && RxBuffer2[5] == '\n' ){
+                stop = 0;
+            }
+            else if(RxBuffer2[0] == 't' && RxBuffer2[1] == '\n'){
+                LED_0 = !LED_0;
+                LED_1 = !LED_1;
+                LED_2 = !LED_2;
+            }
+            else if(RxBuffer2[0] == 's' && RxBuffer2[1] == 't' && RxBuffer2[2] == 'o' && RxBuffer2[3] == 'p'&& RxBuffer2[4] == '\n' ){
+                stop = 1;
+            }
+            else if(RxBuffer2[0] == 's' && RxBuffer2[1] == '\n'){
+                stop = 1;
+            }
+            else if(RxBuffer2[0] == 's' && RxBuffer2[1] == 'e' && RxBuffer2[2] == 't' && RxBuffer2[3] == ' '){
+                if(RxBuffer2[4] == 's' && RxBuffer2[5] == 't' && RxBuffer2[6] == 'a' && RxBuffer2[7] == 't' && RxBuffer2[8] == 'e' && RxBuffer2[9] == ' '){
+                    if(stop){
+                        state = RxBuffer2[10] - '0';
+                        printRpi("state = ");
+                        printRpi(itoa((int)state));
+                        printRpi("\n");
+                    }
+                }
+            }
+            //get
+            else if(RxBuffer2[0] == 'g' && RxBuffer2[1] == 'e' && RxBuffer2[2] == 't' && RxBuffer2[3] == ' '){ //get US 0/1 checked
+                if(RxBuffer2[4] == 'U' && RxBuffer2[5] == 'S' && RxBuffer2[6] == ' '){
+                    char n = RxBuffer2[7] - '0';
+                    if(n < 0 || n >= NB_US){
+                        printRpi("error invalid US id\n");
+                    }
+                    else{
+                        printRpi(itoa((int)US[(unsigned char)n]));
+                        printRpi("\n");
+                    }
+                }
+                else if(RxBuffer2[4] == 's' && RxBuffer2[5] == 't' && RxBuffer2[6] == 'a' && RxBuffer2[7] == 't' && RxBuffer2[8] == 'e'){
+                    printRpi("state = ");
+                    printRpi(itoa((int)state));
+                    printRpi("\n");
+                }
+                else{
+                    printRpi("error invalid get argument\n");
+                }
+                    
+            }
+            //servo //CHECK
+            else if(RxBuffer2[0] == 's' && RxBuffer2[1] == 'e' && RxBuffer2[2] == 'r' && RxBuffer2[3] == 'v' && RxBuffer2[4] == 'o' && RxBuffer2[5] == ' ' && RxBuffer2[7] == ' '){
+                unsigned char n = 0;
+                unsigned int val = 0;
+                while(RxBuffer2[8+n] != '\n' && n <= 4){
+                    val = val*10 + RxBuffer2[8+n] - '0';
+                    n++;
+                }
+                if(n == 5 || n == 0){
+                    printRpi("error invalid servo value\n");
+                }
+                
+                switch(RxBuffer2[6]){
+                    case '0' :
+                        servoUs(SERVO0,val);
+                        printRpi(itoa((int)val));
+                        printRpi(" sent to Servo0\n");
+                        break;
+                    case '1' :
+                        servoUs(SERVO1,val);
+                        break;
+                    case '2' :
+                        servoUs(SERVO2,val);
+                        break;
+                    case '3' :
+                        servoUs(SERVO3,val);
+                        printRpi(itoa((int)val));
+                        printRpi(" sent to Servo3\n");
+                        break;
+                    case '4' :
+                        servoUs(SERVO4,val);
+                        printRpi(itoa((int)val));
+                        printRpi(" sent to Servo3\n");
+                        break;
+                    case '5' :
+                        servoUs(SERVO5,val);
+                        break;
+                    case '6' :
+                        servoUs(SERVO6,val);
+                        break;
+                    default :
+                        printRpi("error invalid servo id\n");
+                        break;
+                }
+            }
+            //go CHECK
+            else if(RxBuffer2[0] == 'g' && RxBuffer2[1] == 'o' && RxBuffer2[2] == ' '){
+                unsigned char n = 0;
+                char positive = 1;
+                if(RxBuffer2[3] == '-'){
+                    positive = 0;
+                    n++;
+                }
+                int x = 0;
+                while(RxBuffer2[3+n] != ' ' && n <= 5){
+                    x = x*10 + RxBuffer2[3+n] - '0';
+                    n++;
+                }
+                if(n + positive == 6 || n == 0){    //if x has 5 digits or 6digits - 1 ('-') = 5
+                    printRpi("error invalid x value\n");
+                }
+                if(!positive)
+                    x = -x;
+                
+                unsigned char m = 0;
+                positive = 1;
+                if(RxBuffer2[3+n+1] == '-'){
+                    positive = 0;
+                    m++;
+                }
+                int y = 0;
+                while(RxBuffer2[3+n+1+m] != '\n' && m <= 5){
+                    y = y*10 + RxBuffer2[3+n+1+m] - '0';
+                    m++;
+                }
+                if(m + positive == 6 || m == 0){    //if x has 5 digits or 6digits - 1 ('-') = 5
+                    printRpi("error invalid y value\n");
+                }
+                if(!positive)
+                    y = -y;
+                if(x >= 0 && x <= 3000 && y >= 0 && y <= 2000){
+                    receivedX = (double)x;
+                    receivedY = (double)y;
+                    newPosReceived = 1;
+                }  
+            }
+            //turn CHECK
+            else if(RxBuffer2[0] == 't' && RxBuffer2[1] == 'u' && RxBuffer2[2] == 'r' && RxBuffer2[3] == 'n' && RxBuffer2[4] == ' '){
+                unsigned char n = 0;
+                char positive = 1;
+                if(RxBuffer2[5] == '-'){
+                    positive = 0;
+                    n++;
+                }
+                int t = 0;
+                while(RxBuffer2[5+n] != '\n' && n <= 4){
+                    t = t*10 + RxBuffer2[5+n] - '0';
+                    n++;
+                }
+                if(n + positive == 5 || n == 0){    //if x has 4 digits or 5 digits - 1 ('-') = 4
+                    printRpi("error invalid x value\n");
+                }
+                if(!positive)
+                    t = -t;
+                
+                if(t > -180 && t <= 180){
+                    receivedTheta = ((double)t)*2*PI/360;
+                    newAngleReceived = 1;
+                }  
+            }
+            //relGo
+            else if(RxBuffer2[0] == 'r' && RxBuffer2[1] == 'e' && RxBuffer2[2] == 'l' && RxBuffer2[3] == 'G' && RxBuffer2[4] == 'o' && RxBuffer2[5] == ' '){
+                
+            }
+            //relTurn
+            else if(RxBuffer2[0] == 'r' && RxBuffer2[1] == 'e' && RxBuffer2[2] == 'l' && RxBuffer2[3] == 'T' && RxBuffer2[4] == 'u' && RxBuffer2[5] == 'r' && RxBuffer2[6] == 'n' && RxBuffer2[7] == ' '){
+                
+            }
+            //motor
+            else if(RxBuffer2[0] == 'm' && RxBuffer2[1] == 'o' && RxBuffer2[2] == 't' && RxBuffer2[3] == 'o' && RxBuffer2[4] == 'r' && RxBuffer2[5] == ' '){
+                unsigned char n = 0;
+                int val = 0;
+                char positive = 1;
+                if(RxBuffer2[8] == '-'){
+                    positive = 0;
+                    n++;
+                }
+                while(RxBuffer2[8+n] != '\n' && n <= 4){
+                    val = val*10 + RxBuffer2[8+n] - '0';
+                    n++;
+                }
+                if(n == 5 || n == 0){
+                    printRpi("error invalid servo value\n");
+                }
+                if(val >= 0 && val <= 70){//(val >-100 && val <= 100){  //70 ~= 6.5V
+                    switch(RxBuffer2[6]){
+                        case '0' :
+                            SENS_ACT_0 = 0; //NE PAS CHANGER LE SENS SINON CA VA VOUS PETEZ AU NEZ !
+                            SDC2 = val * 70;
+                            if(!positive){
+                                //SENS_ACT_0 = 0;   //SERIEUSEMENT JE DECONNE PAS NE DECOMMENTE PAS CES LIGNES
+                                val = -val; //for display
+                            }
+                            else{
+                                //SENS_ACT_0 = 1;   //TU JOUES AVEC LE FEU
+                            }
+                            printRpi(itoa((int)val));
+                            printRpi(" sent to motor0\n");
+                            break;
+                        case '1' :
+                            PDC2 = val * 70;
+                            if(!positive){
+                                SENS_ACT_1 = 0;
+                                val = -val; //for display
+                            }
+                            else{
+                                SENS_ACT_1 = 1;
+                            }
+                            printRpi(itoa((int)val));
+                            printRpi(" sent to motor1\n");
+                            break;
+                        default :
+                            printRpi("error invalid motor id\n");
+                            break;
+                    }
+                }
+                else{
+                    printRpi("invalid motor value\n");
+                }
+            }
+            else if(RxBuffer2[0] == 'c' && RxBuffer2[1] == 'a' && RxBuffer2[2] == 'n' && RxBuffer2[3] == 'o' && RxBuffer2[4] == 'n' && RxBuffer2[5] == ' ' && RxBuffer2[6] == 'o' && RxBuffer2[7] == 'n' && RxBuffer2[8] == '\n'){
+                SDC2 = (int)(2.8/VBAT*7000);
+            }
+            else if(RxBuffer2[0] == 'c' && RxBuffer2[1] == 'a' && RxBuffer2[2] == 'n' && RxBuffer2[3] == 'o' && RxBuffer2[4] == 'n' && RxBuffer2[5] == ' ' && RxBuffer2[6] == 'o' && RxBuffer2[7] == 'f' && RxBuffer2[8] == 'f' && RxBuffer2[9] == '\n'){
+                SDC2 = 0;
+            }
+            else if(RxBuffer2[0] == 'a' && RxBuffer2[1] == 'x' && RxBuffer2[2] == '1' && RxBuffer2[3] == '2' && RxBuffer2[4] == ' ' && RxBuffer2[6] == ' '){
+                unsigned char n = 0;
+                unsigned int val = 0;
+                while(RxBuffer2[7+n] != '\n' && n <= 4){
+                    val = val*10 + RxBuffer2[7+n] - '0';
+                    n++;
+                }
+                if(n == 5 || n == 0 || val > 1023){
+                    printRpi("error invalid servo value\n");
+                }
+                char L = (char)(val&0xff);
+                char H = (char)((val>>8)&0x3);
+                switch(RxBuffer2[6]){
+                    case '1' :
+                        rotateToAX12(AX12_ID_1,L,H);
+                        break;
+                    case '3' :
+                        rotateToAX12(AX12_ID_3,L,H);
+                        break;
+                    default :
+                        printRpi("error invalid AX12 id (1 or 3)\n");
+                        break;
+                }
+            }
+            else if(RxBuffer2[0] == 'd' && RxBuffer2[1] == 'e' && RxBuffer2[2] == 'b' && RxBuffer2[3] == 'u' && RxBuffer2[4] == 'g' && RxBuffer2[5] == ' '){
+                debugPosRpi = !debugPosRpi;
+            }
+            else if(RxBuffer2[0] == 'd' && RxBuffer2[1] == 'e' && RxBuffer2[2] == 'b' && RxBuffer2[3] == 'u' && RxBuffer2[4] == 'g' && RxBuffer2[5] == 'A' && RxBuffer2[6] == ' '){
+                debugPosRpiAsserv = !debugPosRpiAsserv;
+            }
+            else{
+                printRpi("error : invalid cmd\n");
+            }
+            /*switch(RxBuffer2[0]){
                 case GET:
                     switch(RxBuffer2[1]){
                         case _TMR1:
@@ -292,10 +558,12 @@ void __attribute__((interrupt,no_auto_psv)) _U2RXInterrupt(void)
                 default:
                     printRpi("error\n");
                     break;
-            }
+            }*/
             iRx2 = 0;
-        }*/
-        
+        }
+        else{
+            iRx2++;
+        }
             
     }
     IFS1bits.U2RXIF = 0;

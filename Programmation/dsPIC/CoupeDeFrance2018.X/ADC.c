@@ -40,7 +40,11 @@ void initADC1(){
     AD1CON4bits.ADDMAEN = 0;    //Conversion results are stored in the ADC1BUF0 through ADC1BUFF registers; DMA will not be used
     
     AD1CHS123 = 0;  
-    AD1CHS0 = 0;
+    //AD1CHS0 = 0;
+    AD1CHS0bits.CH0NB = 0;
+    AD1CHS0bits.CH0SB = 0b011000;//AN24
+    AD1CHS0bits.CH0NA = 0;
+    AD1CHS0bits.CH0SA = 0b011000;//AN24
     AD1CSSL = 0;
     AD1CSSH = 0;
     

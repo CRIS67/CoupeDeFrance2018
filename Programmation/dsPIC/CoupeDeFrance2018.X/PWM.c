@@ -72,18 +72,19 @@ void initPWM4(){           //50Hz for serovomotors
     PWMCON4bits.MTBS = 1;   //PWMx generator uses the secondary master time base (1/64)
     FCLCON4 = 0x0003;       //Fault input is disabled
 }
-void initPWM5(){       //20KHz
+void initPWM5(){       //50Hz for serovomotors
     PHASE5 = 43750;      //Period of PWM5H     Fosc / (F_PWM*PWM_Input_Clock_Prescaler) ex : 140Mhz / (20kHz * 1) = 7000 or wih Fosc = 138.24MHz -> 6912
     SPHASE5 = 43750;     //Period of PWM5L
     PDC5 = 0;           //Duty cycle of PWM5H
     SDC5 = 0;           //Duty cycle of PWM5L
-    DTR5 = 0;           //Dead Time
-    ALTDTR5 = 0;
+    //DTR5 = 0;           //Dead Time
+    //ALTDTR5 = 0;
     IOCON5bits.PENH = 1;    //PWMx module controls the PWMxH pin
     IOCON5bits.PENL = 1;    //PWMx module controls the PWMxL pin
     IOCON5bits.PMOD = 0b11; //PWMx I/O pin pair is in the True Independent Output mode
     PWMCON5bits.ITB = 1;    //PHASEx register provides the time base period for this PWMx generator
     PWMCON5bits.MTBS = 1;   //PWMx generator uses the secondary master time base for synchronization and as the clock source for the PWMx generation logic
+    FCLCON5 = 0x0003;
 }
 void initPWM6(){           //50Hz for serovomotors
     PHASE6 = 43750;         //Period of PWM6H     Fosc / (F_PWM*PWM_Input_Clock_Prescaler) ex : 140Mhz / 64*(50Hz * 1) = 43750

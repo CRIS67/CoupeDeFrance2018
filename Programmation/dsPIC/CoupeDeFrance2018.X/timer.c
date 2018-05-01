@@ -43,6 +43,9 @@ volatile double d;
 unsigned char i_us,n_us;
 
 extern volatile char sendBT;
+extern volatile unsigned char debugPosRpiAsserv;
+
+extern volatile unsigned char stop;
 
 void initTimer() {
     initTimer1();
@@ -280,7 +283,20 @@ void __attribute__((interrupt,no_auto_psv)) _T1Interrupt(void)
             print(itoa((int)(xc*10)));
             print("\n");
         }
-        
+        if(debugPosRpiAsserv){
+            printRpi(itoa((int)x));
+            printRpi(",");
+            printRpi(itoa((int)y));
+            printRpi(",");
+            printRpi(itoa((int)((theta*360)/(2*PI))));
+            printRpi(",");
+            printRpi(itoa((int)xc));
+            printRpi(",");
+            printRpi(itoa((int)yc));
+            printRpi(",");
+            printRpi(itoa((int)((thetac*360)/(2*PI))));
+            printRpi("\n");
+        }
         //print("\r\n");
 
 
@@ -300,7 +316,8 @@ void __attribute__((interrupt,no_auto_psv)) _T1Interrupt(void)
         prevCommandeL = commandeL;
         prevCommandeR = commandeR;
 
-        sendToMotor(commandeR, commandeL);
+        if(!stop)
+            sendToMotor(commandeR, commandeL);
         
         //print("=)\n");
         

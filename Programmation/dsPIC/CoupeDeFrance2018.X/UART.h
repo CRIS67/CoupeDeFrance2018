@@ -4,6 +4,7 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "constant.h"
 #include "PID.h"
+#include "AX12.h"
 
 void initUART();
 void initUART1();

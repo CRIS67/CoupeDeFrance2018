@@ -7,7 +7,9 @@ timer.h  \
  PID.h  \
 PWM.h  \
 UART.h  \
+AX12.h  \
 QEI.h  \
 SPI.h  \
 ADC.h  \
-interrupt.h 
+interrupt.h  \
+US.h 
