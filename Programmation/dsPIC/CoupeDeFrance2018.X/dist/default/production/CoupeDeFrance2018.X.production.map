@@ -137,12 +137,12 @@ Program Memory  [Origin = 0x200, Length = 0x555ec]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x776           0xb31  (2865)
-.const                       0x976               0x260           0x390  (912)
-.text                        0xbd6              0x3fa2          0x5f73  (24435)
-.dinit                      0x4b78                0x4c            0x72  (114)
-.text                       0x4bc4                0x30            0x48  (72)
+.const                       0x976               0x438           0x654  (1620)
+.text                        0xdae              0x4042          0x6063  (24675)
+.dinit                      0x4df0                0x4c            0x72  (114)
+.text                       0x4e3c                0x30            0x48  (72)
 
-                 Total program memory used (bytes):         0x6eee  (28398) 5%
+                 Total program memory used (bytes):         0x72a2  (29346) 5%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0x1fc]
@@ -344,11 +344,11 @@ External Symbols in Program Memory (by address):
                   0x0003f6                  _atanf
                   0x0004c0                  _cosf
                   0x0004c4                  ___divsf3
-                  0x000548                  ___lesf2
                   0x000548                  ___eqsf2
+                  0x000548                  ___lesf2
                   0x000548                  ___ltsf2
-                  0x00054c                  ___gtsf2
                   0x00054c                  ___gesf2
+                  0x00054c                  ___gtsf2
                   0x000550                  ___fixsfsi
                   0x000592                  ___fixunssfsi
                   0x0005c8                  ___floatsisf
@@ -368,94 +368,95 @@ External Symbols in Program Memory (by address):
                   0x000876                  ___floatundisf
                   0x0008d4                  _fmodf
                   0x0008d8                  __fmodrem
-                  0x000bd6                  _main
-                  0x000f9c                  _testAccMax
-                  0x001028                  _reglageDiametre
-                  0x001146                  _printPos
-                  0x00118c                  _straightPath
-                  0x001796                  _go
-                  0x001cfa                  _turn
-                  0x001f42                  _sturn
-                  0x001fd6                  _initUART
-                  0x001fe0                  _initUART1
-                  0x002048                  _initUART2
-                  0x0020ac                  __U1RXInterrupt
-                  0x00265c                  __U2RXInterrupt
-                  0x0030da                  __U1TXInterrupt
-                  0x00310a                  __U2TXInterrupt
-                  0x00313a                  _push
-                  0x00315e                  _push2
-                  0x003182                  _pop
-                  0x0031a6                  _pop2
-                  0x0031ca                  _print
-                  0x003212                  _printRpi
-                  0x00325a                  _itoa
-                  0x0032c0                  _initTimer
-                  0x0032fc                  _initTimer1
-                  0x003320                  _initTimer2
-                  0x003344                  _initTimer3
-                  0x003366                  _initTimer4
-                  0x00338a                  _delay_us
-                  0x0033a6                  _delay_ms
-                  0x0033d2                  __T1Interrupt
-                  0x003b1c                  __T3Interrupt
-                  0x003b34                  _initPWM
-                  0x003b5a                  _initPWM1
-                  0x003b80                  _initPWM2
-                  0x003ba6                  _initPWM3
-                  0x003bcc                  _initPWM4
-                  0x003bf2                  _initPWM5
-                  0x003c18                  _initPWM6
-                  0x003c3e                  _servoUs
-                  0x003d16                  _testServo
-                  0x003dc6                  _testMotor
-                  0x003e46                  _sendToMotor
-                  0x00413a                  _initAllPID
-                  0x0041e0                  _initPID
-                  0x00425a                  _setSetPoint
-                  0x004270                  _setProcessValue
-                  0x004286                  _compute
-                  0x0043d0                  _modulo2Pi
-                  0x00441e                  _initGPIO
-                  0x004538                  _testRupt
-                  0x0045e0                  _initInt
-                  0x00460c                  __CNInterrupt
-                  0x00479e                  _initAX12
-                  0x004800                  _pushAX12
-                  0x004824                  _popAX12
-                  0x004848                  _turnLedAX12
-                  0x004862                  _blockAnswerAX12
-                  0x00487a                  _rotateToAX12
-                  0x00489a                  _writeDataAX12
-                  0x004920                  __U3TXInterrupt
-                  0x004950                  __U3RXInterrupt
-                  0x004958                  _initSPI
-                  0x004960                  _initSPI1
-                  0x00499e                  __SPI1Interrupt
-                  0x004a24                  _initADC
-                  0x004a2c                  _initADC1
-                  0x004aae                  _readADC1
-                  0x004ac0                  _initClock
-                  0x004b1e                  _initQEI
-                  0x004b28                  _initQEI1
-                  0x004b50                  _initQEI2
-                  0x004bc4                  _initUS
+                  0x000dae                  _main
+                  0x00117c                  _testAccMax
+                  0x001208                  _reglageDiametre
+                  0x001326                  _printPos
+                  0x00136c                  _straightPath
+                  0x001976                  _go
+                  0x001ee0                  _turn
+                  0x00212e                  _debugRupt
+                  0x0021d4                  _debugUS
+                  0x002206                  _initUART
+                  0x002210                  _initUART1
+                  0x002278                  _initUART2
+                  0x0022dc                  __U1RXInterrupt
+                  0x00288c                  __U2RXInterrupt
+                  0x00332a                  __U1TXInterrupt
+                  0x00335a                  __U2TXInterrupt
+                  0x00338a                  _push
+                  0x0033ae                  _push2
+                  0x0033d2                  _pop
+                  0x0033f6                  _pop2
+                  0x00341a                  _print
+                  0x003462                  _printRpi
+                  0x0034aa                  _itoa
+                  0x003510                  _initTimer
+                  0x00354c                  _initTimer1
+                  0x003570                  _initTimer2
+                  0x003594                  _initTimer3
+                  0x0035b6                  _initTimer4
+                  0x0035da                  _delay_us
+                  0x0035f6                  _delay_ms
+                  0x003622                  __T1Interrupt
+                  0x003d6c                  __T3Interrupt
+                  0x003d84                  _initPWM
+                  0x003dca                  _initPWM1
+                  0x003df0                  _initPWM2
+                  0x003e1e                  _initPWM3
+                  0x003e44                  _initPWM4
+                  0x003e6a                  _initPWM5
+                  0x003e90                  _initPWM6
+                  0x003eb6                  _servoUs
+                  0x003f8e                  _testServo
+                  0x00403e                  _testMotor
+                  0x0040be                  _sendToMotor
+                  0x0043b2                  _initAllPID
+                  0x004458                  _initPID
+                  0x0044d2                  _setSetPoint
+                  0x0044e8                  _setProcessValue
+                  0x0044fe                  _compute
+                  0x004648                  _modulo2Pi
+                  0x004696                  _initGPIO
+                  0x0047b0                  _testRupt
+                  0x004858                  _initInt
+                  0x004884                  __CNInterrupt
+                  0x004a16                  _initAX12
+                  0x004a78                  _pushAX12
+                  0x004a9c                  _popAX12
+                  0x004ac0                  _turnLedAX12
+                  0x004ada                  _blockAnswerAX12
+                  0x004af2                  _rotateToAX12
+                  0x004b12                  _writeDataAX12
+                  0x004b98                  __U3TXInterrupt
+                  0x004bc8                  __U3RXInterrupt
+                  0x004bd0                  _initSPI
+                  0x004bd8                  _initSPI1
+                  0x004c16                  __SPI1Interrupt
+                  0x004c9c                  _initADC
+                  0x004ca4                  _initADC1
+                  0x004d26                  _readADC1
+                  0x004d38                  _initClock
+                  0x004d96                  _initQEI
+                  0x004da0                  _initQEI1
+                  0x004dc8                  _initQEI2
+                  0x004e3c                  _initUS
                   0x0557fa                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x00460c                  __CNInterrupt
+                  0x004884                  __CNInterrupt
                   0x0002fa                  __DefaultInterrupt
                   0x0557fa                  __FGS.sec
-                  0x00499e                  __SPI1Interrupt
-                  0x0033d2                  __T1Interrupt
-                  0x003b1c                  __T3Interrupt
-                  0x0020ac                  __U1RXInterrupt
-                  0x0030da                  __U1TXInterrupt
-                  0x00265c                  __U2RXInterrupt
-                  0x00310a                  __U2TXInterrupt
-                  0x004950                  __U3RXInterrupt
-                  0x004920                  __U3TXInterrupt
+                  0x004c16                  __SPI1Interrupt
+                  0x003622                  __T1Interrupt
+                  0x003d6c                  __T3Interrupt
+                  0x0022dc                  __U1RXInterrupt
+                  0x00332a                  __U1TXInterrupt
+                  0x00288c                  __U2RXInterrupt
+                  0x00335a                  __U2TXInterrupt
+                  0x004bc8                  __U3RXInterrupt
+                  0x004b98                  __U3TXInterrupt
                   0x000302                  ___addsf3
                   0x0004c4                  ___divsf3
                   0x000548                  ___eqsf2
@@ -486,72 +487,73 @@ External Symbols in Program Memory (by name):
                   0x0006e0                  __sincosf
                   0x0003bc                  _atan2f
                   0x0003f6                  _atanf
-                  0x004862                  _blockAnswerAX12
-                  0x004286                  _compute
+                  0x004ada                  _blockAnswerAX12
+                  0x0044fe                  _compute
                   0x0004c0                  _cosf
-                  0x0033a6                  _delay_ms
-                  0x00338a                  _delay_us
+                  0x00212e                  _debugRupt
+                  0x0021d4                  _debugUS
+                  0x0035f6                  _delay_ms
+                  0x0035da                  _delay_us
                   0x0008d4                  _fmodf
-                  0x001796                  _go
-                  0x004a24                  _initADC
-                  0x004a2c                  _initADC1
-                  0x00479e                  _initAX12
-                  0x00413a                  _initAllPID
-                  0x004ac0                  _initClock
-                  0x00441e                  _initGPIO
-                  0x0045e0                  _initInt
-                  0x0041e0                  _initPID
-                  0x003b34                  _initPWM
-                  0x003b5a                  _initPWM1
-                  0x003b80                  _initPWM2
-                  0x003ba6                  _initPWM3
-                  0x003bcc                  _initPWM4
-                  0x003bf2                  _initPWM5
-                  0x003c18                  _initPWM6
-                  0x004b1e                  _initQEI
-                  0x004b28                  _initQEI1
-                  0x004b50                  _initQEI2
-                  0x004958                  _initSPI
-                  0x004960                  _initSPI1
-                  0x0032c0                  _initTimer
-                  0x0032fc                  _initTimer1
-                  0x003320                  _initTimer2
-                  0x003344                  _initTimer3
-                  0x003366                  _initTimer4
-                  0x001fd6                  _initUART
-                  0x001fe0                  _initUART1
-                  0x002048                  _initUART2
-                  0x004bc4                  _initUS
-                  0x00325a                  _itoa
-                  0x000bd6                  _main
-                  0x0043d0                  _modulo2Pi
-                  0x003182                  _pop
-                  0x0031a6                  _pop2
-                  0x004824                  _popAX12
-                  0x0031ca                  _print
-                  0x001146                  _printPos
-                  0x003212                  _printRpi
-                  0x00313a                  _push
-                  0x00315e                  _push2
-                  0x004800                  _pushAX12
-                  0x004aae                  _readADC1
-                  0x001028                  _reglageDiametre
-                  0x00487a                  _rotateToAX12
-                  0x003e46                  _sendToMotor
-                  0x003c3e                  _servoUs
-                  0x004270                  _setProcessValue
-                  0x00425a                  _setSetPoint
+                  0x001976                  _go
+                  0x004c9c                  _initADC
+                  0x004ca4                  _initADC1
+                  0x004a16                  _initAX12
+                  0x0043b2                  _initAllPID
+                  0x004d38                  _initClock
+                  0x004696                  _initGPIO
+                  0x004858                  _initInt
+                  0x004458                  _initPID
+                  0x003d84                  _initPWM
+                  0x003dca                  _initPWM1
+                  0x003df0                  _initPWM2
+                  0x003e1e                  _initPWM3
+                  0x003e44                  _initPWM4
+                  0x003e6a                  _initPWM5
+                  0x003e90                  _initPWM6
+                  0x004d96                  _initQEI
+                  0x004da0                  _initQEI1
+                  0x004dc8                  _initQEI2
+                  0x004bd0                  _initSPI
+                  0x004bd8                  _initSPI1
+                  0x003510                  _initTimer
+                  0x00354c                  _initTimer1
+                  0x003570                  _initTimer2
+                  0x003594                  _initTimer3
+                  0x0035b6                  _initTimer4
+                  0x002206                  _initUART
+                  0x002210                  _initUART1
+                  0x002278                  _initUART2
+                  0x004e3c                  _initUS
+                  0x0034aa                  _itoa
+                  0x000dae                  _main
+                  0x004648                  _modulo2Pi
+                  0x0033d2                  _pop
+                  0x0033f6                  _pop2
+                  0x004a9c                  _popAX12
+                  0x00341a                  _print
+                  0x001326                  _printPos
+                  0x003462                  _printRpi
+                  0x00338a                  _push
+                  0x0033ae                  _push2
+                  0x004a78                  _pushAX12
+                  0x004d26                  _readADC1
+                  0x001208                  _reglageDiametre
+                  0x004af2                  _rotateToAX12
+                  0x0040be                  _sendToMotor
+                  0x003eb6                  _servoUs
+                  0x0044e8                  _setProcessValue
+                  0x0044d2                  _setSetPoint
                   0x0007b2                  _sinf
                   0x0007b6                  _sqrtf
-                  0x00118c                  _straightPath
-                  0x001f42                  _sturn
-                  0x000f9c                  _testAccMax
-                  0x003dc6                  _testMotor
-                  0x004538                  _testRupt
-                  0x003d16                  _testServo
-                  0x001cfa                  _turn
-                  0x004848                  _turnLedAX12
-                  0x00489a                  _writeDataAX12
+                  0x00136c                  _straightPath
+                  0x00117c                  _testAccMax
+                  0x00403e                  _testMotor
+                  0x0047b0                  _testRupt
+                  0x003f8e                  _testServo
+                  0x001ee0                  _turn
+                  0x004ac0                  _turnLedAX12
+                  0x004b12                  _writeDataAX12
 
 Memory Configuration
 
@@ -742,21 +744,21 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0xce74
+.debug_info       0x000000       0xd6f2
  *(.debug_info)
  .debug_info      0x000000        0xad4 build/default/production/ADC.o
  .debug_info      0x000ad4       0x22cb build/default/production/GPIO.o
  .debug_info      0x002d9f        0x3d0 build/default/production/PID.o
- .debug_info      0x00316f       0x202b build/default/production/PWM.o
- .debug_info      0x00519a        0x5b7 build/default/production/QEI.o
- .debug_info      0x005751        0xfa1 build/default/production/SPI.o
- .debug_info      0x0066f2        0x5d6 build/default/production/clock.o
- .debug_info      0x006cc8        0xf46 build/default/production/interrupt.o
- .debug_info      0x007c0e        0xd93 build/default/production/main.o
- .debug_info      0x0089a1       0x18f9 build/default/production/timer.o
- .debug_info      0x00a29a       0x1eb1 build/default/production/UART.o
- .debug_info      0x00c14b        0x18f build/default/production/US.o
- .debug_info      0x00c2da        0xb9a build/default/production/AX12.o
+ .debug_info      0x00316f       0x21b9 build/default/production/PWM.o
+ .debug_info      0x005328        0x5b7 build/default/production/QEI.o
+ .debug_info      0x0058df        0xfa1 build/default/production/SPI.o
+ .debug_info      0x006880        0x5d6 build/default/production/clock.o
+ .debug_info      0x006e56        0xf46 build/default/production/interrupt.o
+ .debug_info      0x007d9c       0x134f build/default/production/main.o
+ .debug_info      0x0090eb       0x18f9 build/default/production/timer.o
+ .debug_info      0x00a9e4       0x1fe5 build/default/production/UART.o
+ .debug_info      0x00c9c9        0x18f build/default/production/US.o
+ .debug_info      0x00cb58        0xb9a build/default/production/AX12.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0xdff
@@ -776,24 +778,24 @@ __FUID3
  .debug_abbrev    0x000c0b         0x7e build/default/production/US.o
  .debug_abbrev    0x000c89        0x176 build/default/production/AX12.o
 
-.debug_line       0x000000        0xf91
+.debug_line       0x000000        0xfbc
  *(.debug_line)
  .debug_line      0x000000         0xb9 build/default/production/ADC.o
  .debug_line      0x0000b9        0x11a build/default/production/GPIO.o
  .debug_line      0x0001d3         0x81 build/default/production/PID.o
- .debug_line      0x000254        0x17a build/default/production/PWM.o
- .debug_line      0x0003ce         0xa9 build/default/production/QEI.o
- .debug_line      0x000477         0xc7 build/default/production/SPI.o
- .debug_line      0x00053e         0x9e build/default/production/clock.o
- .debug_line      0x0005dc         0x1a build/default/production/confBits.o
- .debug_line      0x0005f6         0xef build/default/production/interrupt.o
- .debug_line      0x0006e5        0x2eb build/default/production/main.o
- .debug_line      0x0009d0        0x19c build/default/production/timer.o
- .debug_line      0x000b6c        0x301 build/default/production/UART.o
- .debug_line      0x000e6d         0x37 build/default/production/US.o
- .debug_line      0x000ea4         0xed build/default/production/AX12.o
+ .debug_line      0x000254        0x182 build/default/production/PWM.o
+ .debug_line      0x0003d6         0xa9 build/default/production/QEI.o
+ .debug_line      0x00047f         0xc7 build/default/production/SPI.o
+ .debug_line      0x000546         0x9e build/default/production/clock.o
+ .debug_line      0x0005e4         0x1a build/default/production/confBits.o
+ .debug_line      0x0005fe         0xef build/default/production/interrupt.o
+ .debug_line      0x0006ed        0x2ff build/default/production/main.o
+ .debug_line      0x0009ec        0x19c build/default/production/timer.o
+ .debug_line      0x000b88        0x310 build/default/production/UART.o
+ .debug_line      0x000e98         0x37 build/default/production/US.o
+ .debug_line      0x000ecf         0xed build/default/production/AX12.o
 
-.debug_frame      0x000000        0xa56
+.debug_frame      0x000000        0xa6c
  *(.debug_frame)
  .debug_frame     0x000000         0x68 build/default/production/ADC.o
  .debug_frame     0x000068         0x4c build/default/production/GPIO.o
@@ -803,26 +805,26 @@ __FUID3
  .debug_frame     0x00034a         0x70 build/default/production/SPI.o
  .debug_frame     0x0003ba         0x30 build/default/production/clock.o
  .debug_frame     0x0003ea         0x7e build/default/production/interrupt.o
- .debug_frame     0x000468        0x118 build/default/production/main.o
- .debug_frame     0x000580        0x146 build/default/production/timer.o
- .debug_frame     0x0006c6        0x22c build/default/production/UART.o
- .debug_frame     0x0008f2         0x30 build/default/production/US.o
- .debug_frame     0x000922        0x134 build/default/production/AX12.o
+ .debug_frame     0x000468        0x12e build/default/production/main.o
+ .debug_frame     0x000596        0x146 build/default/production/timer.o
+ .debug_frame     0x0006dc        0x22c build/default/production/UART.o
+ .debug_frame     0x000908         0x30 build/default/production/US.o
+ .debug_frame     0x000938        0x134 build/default/production/AX12.o
 
-.debug_str        0x000000        0x847
+.debug_str        0x000000        0x882
  *(.debug_str)
  .debug_str       0x000000         0x5b build/default/production/ADC.o
  .debug_str       0x00005b         0xea build/default/production/GPIO.o
  .debug_str       0x000145         0x19 build/default/production/PID.o
- .debug_str       0x00015e        0x1a1 build/default/production/PWM.o
- .debug_str       0x0002ff         0x42 build/default/production/QEI.o
- .debug_str       0x000341         0x78 build/default/production/SPI.o
- .debug_str       0x0003b9         0x21 build/default/production/clock.o
- .debug_str       0x0003da         0x5a build/default/production/interrupt.o
- .debug_str       0x000434        0x12c build/default/production/main.o
- .debug_str       0x000560        0x137 build/default/production/timer.o
- .debug_str       0x000697        0x164 build/default/production/UART.o
- .debug_str       0x0007fb         0x4c build/default/production/AX12.o
+ .debug_str       0x00015e        0x1aa build/default/production/PWM.o
+ .debug_str       0x000308         0x42 build/default/production/QEI.o
+ .debug_str       0x00034a         0x78 build/default/production/SPI.o
+ .debug_str       0x0003c2         0x21 build/default/production/clock.o
+ .debug_str       0x0003e3         0x5a build/default/production/interrupt.o
+ .debug_str       0x00043d        0x15e build/default/production/main.o
+ .debug_str       0x00059b        0x137 build/default/production/timer.o
+ .debug_str       0x0006d2        0x164 build/default/production/UART.o
+ .debug_str       0x000836         0x4c build/default/production/AX12.o
 
 .debug_loc
  *(.debug_loc)
@@ -831,7 +833,7 @@ __FUID3
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x7f1
+                  0x000000        0x801
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x38 build/default/production/ADC.o
@@ -850,15 +852,15 @@ __FUID3
  .debug_pubnames
                   0x00020f         0x7b build/default/production/interrupt.o
  .debug_pubnames
-                  0x00028a        0x150 build/default/production/main.o
+                  0x00028a        0x160 build/default/production/main.o
  .debug_pubnames
-                  0x0003da        0x11f build/default/production/timer.o
+                  0x0003ea        0x11f build/default/production/timer.o
  .debug_pubnames
-                  0x0004f9        0x1c7 build/default/production/UART.o
+                  0x000509        0x1c7 build/default/production/UART.o
  .debug_pubnames
-                  0x0006c0         0x37 build/default/production/US.o
+                  0x0006d0         0x37 build/default/production/US.o
  .debug_pubnames
-                  0x0006f7         0xfa build/default/production/AX12.o
+                  0x000707         0xfa build/default/production/AX12.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -2731,7 +2733,7 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000138        0xe47
+                  0x000138        0xf1c
  .debug_pubtypes
                   0x000138         0xe4 build/default/production/ADC.o
  .debug_pubtypes
@@ -2739,110 +2741,110 @@ LOAD data_init
  .debug_pubtypes
                   0x0004ff         0x22 build/default/production/PID.o
  .debug_pubtypes
-                  0x000521        0x228 build/default/production/PWM.o
+                  0x000521        0x245 build/default/production/PWM.o
  .debug_pubtypes
-                  0x000749         0x9e build/default/production/QEI.o
+                  0x000766         0x9e build/default/production/QEI.o
  .debug_pubtypes
-                  0x0007e7        0x17b build/default/production/SPI.o
+                  0x000804        0x17b build/default/production/SPI.o
  .debug_pubtypes
-                  0x000962         0x75 build/default/production/clock.o
+                  0x00097f         0x75 build/default/production/clock.o
  .debug_pubtypes
-                  0x0009d7        0x13d build/default/production/interrupt.o
+                  0x0009f4        0x13d build/default/production/interrupt.o
  .debug_pubtypes
-                  0x000b14         0x5c build/default/production/main.o
+                  0x000b31         0xf7 build/default/production/main.o
  .debug_pubtypes
-                  0x000b70        0x1a3 build/default/production/timer.o
+                  0x000c28        0x1a3 build/default/production/timer.o
  .debug_pubtypes
-                  0x000d13        0x1ad build/default/production/UART.o
+                  0x000dcb        0x1ca build/default/production/UART.o
  .debug_pubtypes
-                  0x000ec0         0x12 build/default/production/US.o
+                  0x000f95         0x12 build/default/production/US.o
  .debug_pubtypes
-                  0x000ed2         0xad build/default/production/AX12.o
+                  0x000fa7         0xad build/default/production/AX12.o
 
 __c30_signature
-                  0x000f7f         0xf6
+                  0x001054         0xf6
  __c30_signature
-                  0x000f7f          0x6 build/default/production/ADC.o
+                  0x001054          0x6 build/default/production/ADC.o
  __c30_signature
-                  0x000f85          0x6 build/default/production/GPIO.o
+                  0x00105a          0x6 build/default/production/GPIO.o
  __c30_signature
-                  0x000f8b          0x6 build/default/production/PID.o
+                  0x001060          0x6 build/default/production/PID.o
  __c30_signature
-                  0x000f91          0x6 build/default/production/PWM.o
+                  0x001066          0x6 build/default/production/PWM.o
  __c30_signature
-                  0x000f97          0x6 build/default/production/QEI.o
+                  0x00106c          0x6 build/default/production/QEI.o
  __c30_signature
-                  0x000f9d          0x6 build/default/production/SPI.o
+                  0x001072          0x6 build/default/production/SPI.o
  __c30_signature
-                  0x000fa3          0x6 build/default/production/clock.o
+                  0x001078          0x6 build/default/production/clock.o
  __c30_signature
-                  0x000fa9          0x6 build/default/production/confBits.o
+                  0x00107e          0x6 build/default/production/confBits.o
  __c30_signature
-                  0x000faf          0x6 build/default/production/interrupt.o
+                  0x001084          0x6 build/default/production/interrupt.o
  __c30_signature
-                  0x000fb5          0x6 build/default/production/main.o
+                  0x00108a          0x6 build/default/production/main.o
  __c30_signature
-                  0x000fbb          0x6 build/default/production/timer.o
+                  0x001090          0x6 build/default/production/timer.o
  __c30_signature
-                  0x000fc1          0x6 build/default/production/UART.o
+                  0x001096          0x6 build/default/production/UART.o
  __c30_signature
-                  0x000fc7          0x6 build/default/production/US.o
+                  0x00109c          0x6 build/default/production/US.o
  __c30_signature
-                  0x000fcd          0x6 build/default/production/AX12.o
+                  0x0010a2          0x6 build/default/production/AX12.o
  __c30_signature
-                  0x000fd3          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extendedep.o)
+                  0x0010a8          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extendedep.o)
  __c30_signature
-                  0x000fd9          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-pic30-elf.a(data_init_extended.o)
+                  0x0010ae          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-pic30-elf.a(data_init_extended.o)
  __c30_signature
-                  0x000fdf          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(addsf3.epeo)
+                  0x0010b4          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(addsf3.epeo)
  __c30_signature
-                  0x000fe5          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(atan2f.epeo)
+                  0x0010ba          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(atan2f.epeo)
  __c30_signature
-                  0x000feb          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(atanf.epeo)
+                  0x0010c0          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(atanf.epeo)
  __c30_signature
-                  0x000ff1          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(cosf.epeo)
+                  0x0010c6          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(cosf.epeo)
  __c30_signature
-                  0x000ff7          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(divsf3.epeo)
+                  0x0010cc          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(divsf3.epeo)
  __c30_signature
-                  0x000ffd          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(errno.epeo)
+                  0x0010d2          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(errno.epeo)
  __c30_signature
-                  0x001003          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(feqltle.epeo)
+                  0x0010d8          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(feqltle.epeo)
  __c30_signature
-                  0x001009          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fgtge.epeo)
+                  0x0010de          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fgtge.epeo)
  __c30_signature
-                  0x00100f          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fixsfsi.epeo)
+                  0x0010e4          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fixsfsi.epeo)
  __c30_signature
-                  0x001015          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fixunssfsi.epeo)
+                  0x0010ea          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fixunssfsi.epeo)
  __c30_signature
-                  0x00101b          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatsisf.epeo)
+                  0x0010f0          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatsisf.epeo)
  __c30_signature
-                  0x001021          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatunsisf.epeo)
+                  0x0010f6          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatunsisf.epeo)
  __c30_signature
-                  0x001027          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fpack.epeo)
+                  0x0010fc          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fpack.epeo)
  __c30_signature
-                  0x00102d          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(funpack.epeo)
+                  0x001102          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(funpack.epeo)
  __c30_signature
-                  0x001033          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(funpack2.epeo)
+                  0x001108          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(funpack2.epeo)
  __c30_signature
-                  0x001039          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(futil.epeo)
+                  0x00110e          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(futil.epeo)
  __c30_signature
-                  0x00103f          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(mulsf3.epeo)
+                  0x001114          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(mulsf3.epeo)
  __c30_signature
-                  0x001045          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(sincosf.epeo)
+                  0x00111a          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(sincosf.epeo)
  __c30_signature
-                  0x00104b          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(sinf.epeo)
+                  0x001120          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(sinf.epeo)
  __c30_signature
-                  0x001051          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(sqrtf.epeo)
+                  0x001126          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(sqrtf.epeo)
  __c30_signature
-                  0x001057          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fcompare.epeo)
+                  0x00112c          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fcompare.epeo)
  __c30_signature
-                  0x00105d          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatdisf.epeo)
+                  0x001132          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatdisf.epeo)
  __c30_signature
-                  0x001063          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatundisf.epeo)
+                  0x001138          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatundisf.epeo)
  __c30_signature
-                  0x001069          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fmodf.epeo)
+                  0x00113e          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fmodf.epeo)
  __c30_signature
-                  0x00106f          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fmodrem.epeo)
+                  0x001144          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fmodrem.epeo)
 
 .nbss               0x1000         0x7e
  .nbss              0x1000         0x2e build/default/production/main.o
@@ -3004,99 +3006,100 @@ __c30_signature
  .ivt._U3RXInterrupt
                   0x0000b8          0x2 build/default/production/AX12.o
 
-.const              0x8976        0x260 load address 0x000976  
- .const             0x8976        0x18a build/default/production/UART.o
- .const             0x8b00         0xd2 build/default/production/main.o
- .const             0x8bd2          0x4 build/default/production/timer.o
+.const              0x8976        0x438 load address 0x000976  
+ .const             0x8976        0x250 build/default/production/UART.o
+ .const             0x8bc6        0x1e4 build/default/production/main.o
+ .const             0x8daa          0x4 build/default/production/timer.o
 
-.text             0x000bd6       0x3fa2
- .text            0x000bd6       0x1400 build/default/production/main.o
-                  0x000bd6                  _main
-                  0x000f9c                  _testAccMax
-                  0x001028                  _reglageDiametre
-                  0x001146                  _printPos
-                  0x00118c                  _straightPath
-                  0x001796                  _go
-                  0x001cfa                  _turn
-                  0x001f42                  _sturn
- .text            0x001fd6       0x12ea build/default/production/UART.o
-                  0x001fd6                  _initUART
-                  0x001fe0                  _initUART1
-                  0x002048                  _initUART2
-                  0x0020ac                  __U1RXInterrupt
-                  0x00265c                  __U2RXInterrupt
-                  0x0030da                  __U1TXInterrupt
-                  0x00310a                  __U2TXInterrupt
-                  0x00313a                  _push
-                  0x00315e                  _push2
-                  0x003182                  _pop
-                  0x0031a6                  _pop2
-                  0x0031ca                  _print
-                  0x003212                  _printRpi
-                  0x00325a                  _itoa
- .text            0x0032c0        0x874 build/default/production/timer.o
-                  0x0032c0                  _initTimer
-                  0x0032fc                  _initTimer1
-                  0x003320                  _initTimer2
-                  0x003344                  _initTimer3
-                  0x003366                  _initTimer4
-                  0x00338a                  _delay_us
-                  0x0033a6                  _delay_ms
-                  0x0033d2                  __T1Interrupt
-                  0x003b1c                  __T3Interrupt
- .text            0x003b34        0x606 build/default/production/PWM.o
-                  0x003b34                  _initPWM
-                  0x003b5a                  _initPWM1
-                  0x003b80                  _initPWM2
-                  0x003ba6                  _initPWM3
-                  0x003bcc                  _initPWM4
-                  0x003bf2                  _initPWM5
-                  0x003c18                  _initPWM6
-                  0x003c3e                  _servoUs
-                  0x003d16                  _testServo
-                  0x003dc6                  _testMotor
-                  0x003e46                  _sendToMotor
- .text            0x00413a        0x2e4 build/default/production/PID.o
-                  0x00413a                  _initAllPID
-                  0x0041e0                  _initPID
-                  0x00425a                  _setSetPoint
-                  0x004270                  _setProcessValue
-                  0x004286                  _compute
-                  0x0043d0                  _modulo2Pi
- .text            0x00441e        0x1c2 build/default/production/GPIO.o
-                  0x00441e                  _initGPIO
-                  0x004538                  _testRupt
- .text            0x0045e0        0x1be build/default/production/interrupt.o
-                  0x0045e0                  _initInt
-                  0x00460c                  __CNInterrupt
- .text            0x00479e        0x1ba build/default/production/AX12.o
-                  0x00479e                  _initAX12
-                  0x004800                  _pushAX12
-                  0x004824                  _popAX12
-                  0x004848                  _turnLedAX12
-                  0x004862                  _blockAnswerAX12
-                  0x00487a                  _rotateToAX12
-                  0x00489a                  _writeDataAX12
-                  0x004920                  __U3TXInterrupt
-                  0x004950                  __U3RXInterrupt
- .text            0x004958         0xcc build/default/production/SPI.o
-                  0x004958                  _initSPI
-                  0x004960                  _initSPI1
-                  0x00499e                  __SPI1Interrupt
- .text            0x004a24         0x9c build/default/production/ADC.o
-                  0x004a24                  _initADC
-                  0x004a2c                  _initADC1
-                  0x004aae                  _readADC1
- .text            0x004ac0         0x5e build/default/production/clock.o
-                  0x004ac0                  _initClock
- .text            0x004b1e         0x5a build/default/production/QEI.o
-                  0x004b1e                  _initQEI
-                  0x004b28                  _initQEI1
-                  0x004b50                  _initQEI2
+.text             0x000dae       0x4042
+ .text            0x000dae       0x1458 build/default/production/main.o
+                  0x000dae                  _main
+                  0x00117c                  _testAccMax
+                  0x001208                  _reglageDiametre
+                  0x001326                  _printPos
+                  0x00136c                  _straightPath
+                  0x001976                  _go
+                  0x001ee0                  _turn
+                  0x00212e                  _debugRupt
+                  0x0021d4                  _debugUS
+ .text            0x002206       0x130a build/default/production/UART.o
+                  0x002206                  _initUART
+                  0x002210                  _initUART1
+                  0x002278                  _initUART2
+                  0x0022dc                  __U1RXInterrupt
+                  0x00288c                  __U2RXInterrupt
+                  0x00332a                  __U1TXInterrupt
+                  0x00335a                  __U2TXInterrupt
+                  0x00338a                  _push
+                  0x0033ae                  _push2
+                  0x0033d2                  _pop
+                  0x0033f6                  _pop2
+                  0x00341a                  _print
+                  0x003462                  _printRpi
+                  0x0034aa                  _itoa
+ .text            0x003510        0x874 build/default/production/timer.o
+                  0x003510                  _initTimer
+                  0x00354c                  _initTimer1
+                  0x003570                  _initTimer2
+                  0x003594                  _initTimer3
+                  0x0035b6                  _initTimer4
+                  0x0035da                  _delay_us
+                  0x0035f6                  _delay_ms
+                  0x003622                  __T1Interrupt
+                  0x003d6c                  __T3Interrupt
+ .text            0x003d84        0x62e build/default/production/PWM.o
+                  0x003d84                  _initPWM
+                  0x003dca                  _initPWM1
+                  0x003df0                  _initPWM2
+                  0x003e1e                  _initPWM3
+                  0x003e44                  _initPWM4
+                  0x003e6a                  _initPWM5
+                  0x003e90                  _initPWM6
+                  0x003eb6                  _servoUs
+                  0x003f8e                  _testServo
+                  0x00403e                  _testMotor
+                  0x0040be                  _sendToMotor
+ .text            0x0043b2        0x2e4 build/default/production/PID.o
+                  0x0043b2                  _initAllPID
+                  0x004458                  _initPID
+                  0x0044d2                  _setSetPoint
+                  0x0044e8                  _setProcessValue
+                  0x0044fe                  _compute
+                  0x004648                  _modulo2Pi
+ .text            0x004696        0x1c2 build/default/production/GPIO.o
+                  0x004696                  _initGPIO
+                  0x0047b0                  _testRupt
+ .text            0x004858        0x1be build/default/production/interrupt.o
+                  0x004858                  _initInt
+                  0x004884                  __CNInterrupt
+ .text            0x004a16        0x1ba build/default/production/AX12.o
+                  0x004a16                  _initAX12
+                  0x004a78                  _pushAX12
+                  0x004a9c                  _popAX12
+                  0x004ac0                  _turnLedAX12
+                  0x004ada                  _blockAnswerAX12
+                  0x004af2                  _rotateToAX12
+                  0x004b12                  _writeDataAX12
+                  0x004b98                  __U3TXInterrupt
+                  0x004bc8                  __U3RXInterrupt
+ .text            0x004bd0         0xcc build/default/production/SPI.o
+                  0x004bd0                  _initSPI
+                  0x004bd8                  _initSPI1
+                  0x004c16                  __SPI1Interrupt
+ .text            0x004c9c         0x9c build/default/production/ADC.o
+                  0x004c9c                  _initADC
+                  0x004ca4                  _initADC1
+                  0x004d26                  _readADC1
+ .text            0x004d38         0x5e build/default/production/clock.o
+                  0x004d38                  _initClock
+ .text            0x004d96         0x5a build/default/production/QEI.o
+                  0x004d96                  _initQEI
+                  0x004da0                  _initQEI1
+                  0x004dc8                  _initQEI2
 
-.dinit            0x004b78         0x4c
- .dinit           0x004b78         0x4c data_init
+.dinit            0x004df0         0x4c
+ .dinit           0x004df0         0x4c data_init
 
-.text             0x004bc4         0x30
- .text            0x004bc4         0x30 build/default/production/US.o
-                  0x004bc4                  _initUS
+.text             0x004e3c         0x30
+ .text            0x004e3c         0x30 build/default/production/US.o
+                  0x004e3c                  _initUS

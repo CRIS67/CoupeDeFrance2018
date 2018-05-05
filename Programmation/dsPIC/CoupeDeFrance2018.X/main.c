@@ -36,6 +36,8 @@ void testSPI();
 void testADC();
 void testInterrupt();
 void testDelay();
+void debugRupt();
+void debugUS();
 
 //Global variables
 char TX[TX_SIZE];
@@ -189,6 +191,10 @@ int main(){
                     turn(receivedTheta);
                 }
                 delay_ms(100);
+                break;
+            case 2 :
+                debugUS();
+                debugRupt();
                 break;
             default:
                 print("ERROR UNDEFINED STATE");
@@ -459,10 +465,13 @@ void go(double cx, double cy, double speedMax, double accMax){
     double angle = 0;
     
     double sign;
-    if(phi > 0)
+    if(phi > 0){
         sign = 1;
-    else
+    }
+    else{
         sign = -1;
+        phi = -phi;
+    }
     while(angularVelocity < maxAngularVelocity && angle < phi/2){
 		angularVelocity += AngularAcceleration * TE;
 		angle += TE * (prevAngularVelocity + angularVelocity) / 2;
@@ -574,10 +583,13 @@ void turn(double ct){
     double angle = 0;
     
     double sign;
-    if(phi > 0)
+    if(phi > 0){
         sign = 1;
-    else
+    }
+    else{
         sign = -1;
+        phi = -phi;
+    }
     while(angularVelocity < maxAngularVelocity && angle < phi/2){
 		angularVelocity += AngularAcceleration * TE;
 		angle += TE * (prevAngularVelocity + angularVelocity) / 2;
@@ -609,29 +621,37 @@ void turn(double ct){
     delay_ms(500);
     
 }
-
-void sturn(double ct){
-    double i;
-    /*Phase 3 : rotation */
-    if(ct > theta){
-        for(i = theta; i <= ct; i+= ROTATION_SPEED){
-            thetac = i;
-            delay_ms(DELAY_SPEED);
-        }
-    }
-    else{
-        for(i = theta; i >= ct; i-= ROTATION_SPEED){
-            thetac = i;
-            delay_ms(DELAY_SPEED);
-        }
-    }
-    //print("Phase 3 OK\n");
-    thetac = ct;
-    /*arrived = 0;
-    while(!arrived){
-        printPos();
-    }*/
+void debugRupt(){
+    printRpi("rupteur asservissement 0 = ");
+    printRpi(itoa(RUPT_ASS_0));
+    printRpi("\nrupteur asservissement 1 = ");
+    printRpi(itoa(RUPT_ASS_1));
+    printRpi("\nrupteur asservissement 2 = ");
+    printRpi(itoa(RUPT_ASS_2));
+    printRpi("\nrupteur asservissement 3 = ");
+    printRpi(itoa(RUPT_ASS_3));
     
-    delay_ms(500);
-    //while(!arrived);
+    printRpi("\nrupteur actionneur 0 = ");
+    printRpi(itoa(RUPT_ACT_0));
+    printRpi("\nrupteur actionneur 1 = ");
+    printRpi(itoa(RUPT_ACT_1));
+    printRpi("\nrupteur actionneur 2 = ");
+    printRpi(itoa(RUPT_ACT_2));
+    printRpi("\nrupteur actionneur 3 = ");
+    printRpi(itoa(RUPT_ACT_3));
+    printRpi("\nrupteur actionneur 4 = ");
+    printRpi(itoa(RUPT_ACT_4));
+    printRpi("\nrupteur actionneur 5 = ");
+    printRpi(itoa(RUPT_ACT_5));
+}
+
+void debugUS(){
+    unsigned char i;
+    for(i = 0; i < NB_US; i++){
+        printRpi("US[");
+        printRpi(itoa((int)i));
+        printRpi("] = ");
+        printRpi(itoa(RUPT_ASS_0));
+        printRpi("\n");
+    }
 }
